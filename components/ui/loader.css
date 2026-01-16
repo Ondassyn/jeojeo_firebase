@@ -1,0 +1,19 @@
+.loader {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1; /* Ensures it stays square */
+    --c: no-repeat linear-gradient(var(--loader-color, gray) 0 0);
+    background: var(--c), var(--c), var(--c), var(--c);
+    
+    /* background-size is 52.5% to mimic the 21px/40px ratio */
+    background-size: 42.5% 42.5%; 
+    animation: l5 2s infinite cubic-bezier(0.3, 1, 0, 1);
+}
+
+@keyframes l5 {
+   0%   { background-position: 0 0, 100% 0, 100% 100%, 0 100% }
+   /* We use scale instead of changing width/height to keep it relative to parent */
+   33%  { background-position: 0 0, 100% 0, 100% 100%, 0 100%; transform: scale(1.5); }
+   66%  { background-position: 100% 0, 100% 100%, 0 100%, 0 0; transform: scale(1.5); }
+   100% { background-position: 100% 0, 100% 100%, 0 100%, 0 0; }
+}
