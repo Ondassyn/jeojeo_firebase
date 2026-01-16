@@ -502,7 +502,7 @@ export function GameSession({
                               ?.questionImage
                           }
                           alt="Question"
-                          className="w-full max-h-[400] object-cover"
+                          className="w-full max-h-[600] object-cover"
                         />
                       </motion.div>
                     )}
