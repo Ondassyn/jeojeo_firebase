@@ -497,14 +497,37 @@ export function GameSession({
                         transition={{ delay: 0.3 }}
                         className="mb-12 rounded-2xl overflow-hidden border border-neutral-800"
                       >
-                        <img
-                          src={
-                            rounds?.[roundIndex]?.questions?.[questionIndex]
-                              ?.questionImage
-                          }
-                          alt="Question"
-                          className="w-full max-h-[600] object-cover"
-                        />
+                        {rounds?.[roundIndex]?.questions?.[
+                          questionIndex
+                        ]?.questionImage.includes("output-format=mp4") ? (
+                          <video
+                            aria-label="GIF: "
+                            autoPlay={true}
+                            // height="321"
+                            loop={true}
+                            playsInline={true}
+                            // width="600"
+                            muted={true}
+                            className="w-full max-h-[600] object-cover"
+                          >
+                            <source
+                              type="video/mp4"
+                              src={
+                                rounds?.[roundIndex]?.questions?.[questionIndex]
+                                  ?.questionImage
+                              }
+                            />
+                          </video>
+                        ) : (
+                          <img
+                            src={
+                              rounds?.[roundIndex]?.questions?.[questionIndex]
+                                ?.questionImage
+                            }
+                            alt="Question"
+                            className="w-full max-h-[600] object-cover"
+                          />
+                        )}
                       </motion.div>
                     )}
 
@@ -582,14 +605,38 @@ export function GameSession({
                           transition={{ delay: 0.2 }}
                           className="rounded-xl overflow-hidden border border-green-500/20"
                         >
-                          <img
-                            src={
-                              rounds?.[roundIndex]?.questions?.[questionIndex]
-                                .answerImage
-                            }
-                            alt="Answer"
-                            className="w-full max-h-[400] object-cover"
-                          />
+                          {rounds?.[roundIndex]?.questions?.[
+                            questionIndex
+                          ]?.answerImage.includes("output-format=mp4") ? (
+                            <video
+                              aria-label="GIF: "
+                              autoPlay={true}
+                              // height="321"
+                              loop={true}
+                              playsInline={true}
+                              // width="600"
+                              muted={true}
+                              className="w-full max-h-[600] object-cover"
+                            >
+                              <source
+                                type="video/mp4"
+                                src={
+                                  rounds?.[roundIndex]?.questions?.[
+                                    questionIndex
+                                  ]?.answerImage
+                                }
+                              />
+                            </video>
+                          ) : (
+                            <img
+                              src={
+                                rounds?.[roundIndex]?.questions?.[questionIndex]
+                                  .answerImage
+                              }
+                              alt="Answer"
+                              className="w-full max-h-[400] object-cover"
+                            />
+                          )}
                         </motion.div>
                       )}
                     </div>
@@ -696,13 +743,15 @@ export function GameSession({
                     {"Start round"}
                     <Play className="size-4 group-hover:translate-x-1 transition-transform duration-200" />
                   </Button>
-                  <Button
-                    onClick={() => setRoundIndex(roundIndex + 1)}
-                    className="bg-white hover:bg-neutral-100 text-neutral-950 group w-1/2"
-                  >
-                    {"Skip round"}
-                    <ChevronRight className="size-4 group-hover:translate-x-1 transition-transform duration-200" />
-                  </Button>
+                  {roundIndex !== rounds.length - 1 && (
+                    <Button
+                      onClick={() => setRoundIndex(roundIndex + 1)}
+                      className="bg-white hover:bg-neutral-100 text-neutral-950 group w-1/2"
+                    >
+                      {"Skip round"}
+                      <ChevronRight className="size-4 group-hover:translate-x-1 transition-transform duration-200" />
+                    </Button>
+                  )}
                 </div>
               </div>
             </motion.div>

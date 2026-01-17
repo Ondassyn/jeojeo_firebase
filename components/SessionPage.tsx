@@ -307,11 +307,26 @@ export function SessionPage() {
                   className="relative rounded-2xl overflow-hidden bg-neutral-900 border border-neutral-800 cursor-pointer group"
                   // onClick={() => setIsImageZoomed(true)}
                 >
-                  <img
-                    src={answerImage}
-                    alt="Question visual"
-                    className="w-full h-auto object-cover"
-                  />
+                  {answerImage.includes("output-format=mp4") ? (
+                    <video
+                      aria-label="GIF: "
+                      autoPlay={true}
+                      // height="321"
+                      loop={true}
+                      playsInline={true}
+                      // width="600"
+                      muted={true}
+                      className="w-full h-auto object-cover"
+                    >
+                      <source type="video/mp4" src={answerImage} />
+                    </video>
+                  ) : (
+                    <img
+                      src={answerImage}
+                      alt="Question visual"
+                      className="w-full h-auto object-cover"
+                    />
+                  )}
                   {/* <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                     <div className="bg-black/60 p-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
                       <ZoomIn className="size-6 text-white" />
@@ -358,22 +373,44 @@ export function SessionPage() {
               >
                 <div
                   className="relative rounded-2xl overflow-hidden bg-neutral-900 border border-neutral-800 cursor-pointer group"
-                  onClick={() => setIsImageZoomed(true)}
+                  onClick={() => {
+                    if (!questionImage.includes("output-format=mp4"))
+                      setIsImageZoomed(true);
+                  }}
                 >
-                  <img
-                    src={questionImage}
-                    alt="Question visual"
-                    className="w-full h-auto object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                    <div className="bg-black/60 p-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                      <ZoomIn className="size-6 text-white" />
+                  {questionImage.includes("output-format=mp4") ? (
+                    <video
+                      aria-label="GIF: "
+                      autoPlay={true}
+                      // height="321"
+                      loop={true}
+                      playsInline={true}
+                      // width="600"
+                      muted={true}
+                      className="w-full h-auto object-cover"
+                    >
+                      <source type="video/mp4" src={questionImage} />
+                    </video>
+                  ) : (
+                    <img
+                      src={questionImage}
+                      alt="Question visual"
+                      className="w-full h-auto object-cover"
+                    />
+                  )}
+                  {questionImage.includes("output-format=mp4") && (
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                      <div className="bg-black/60 p-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                        <ZoomIn className="size-6 text-white" />
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
-                <p className="text-xs text-neutral-500 mt-2 text-center">
-                  Tap to zoom
-                </p>
+                {questionImage.includes("output-format=mp4") && (
+                  <p className="text-xs text-neutral-500 mt-2 text-center">
+                    Tap to zoom
+                  </p>
+                )}
               </motion.div>
             )}
 
