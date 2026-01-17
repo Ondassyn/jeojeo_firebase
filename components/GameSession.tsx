@@ -16,6 +16,7 @@ import {
   CircleCheck,
   CircleQuestionMark,
   UserRoundPen,
+  ChevronRight,
 } from "lucide-react";
 import { Leaderboard } from "./Leaderboard";
 import { Round } from "@/lib/types/round";
@@ -135,7 +136,7 @@ export function GameSession({
     }
   };
 
-  const timerPercentage = (timeLeft / 30) * 100;
+  const timerPercentage = (timeLeft / timeForQuestion) * 100;
   const timerColor =
     timeLeft > 20 ? "#10b981" : timeLeft > 10 ? "#f59e0b" : "#ef4444";
 
@@ -594,35 +595,37 @@ export function GameSession({
                     </div>
 
                     {/* Timer (shown even when answer is revealed) */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.3 }}
-                      className="space-y-4 mt-8"
-                    >
-                      <div className="flex items-center justify-between text-sm">
-                        <div className="flex items-center gap-2 text-neutral-400">
-                          <Clock className="size-4" />
-                          <span>Time remaining</span>
+                    {!showAnswer && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 }}
+                        className="space-y-4 mt-8"
+                      >
+                        <div className="flex items-center justify-between text-sm">
+                          <div className="flex items-center gap-2 text-neutral-400">
+                            <Clock className="size-4" />
+                            <span>Time remaining</span>
+                          </div>
+                          <span
+                            className="text-2xl font-mono tabular-nums"
+                            style={{ color: timerColor }}
+                          >
+                            {timeLeft}s
+                          </span>
                         </div>
-                        <span
-                          className="text-2xl font-mono tabular-nums"
-                          style={{ color: timerColor }}
-                        >
-                          {timeLeft}s
-                        </span>
-                      </div>
 
-                      <div className="h-2 bg-neutral-900 rounded-full overflow-hidden">
-                        <motion.div
-                          className="h-full rounded-full"
-                          style={{ backgroundColor: timerColor }}
-                          initial={{ width: "100%" }}
-                          animate={{ width: `${timerPercentage}%` }}
-                          transition={{ duration: 0.3 }}
-                        />
-                      </div>
-                    </motion.div>
+                        <div className="h-2 bg-neutral-900 rounded-full overflow-hidden">
+                          <motion.div
+                            className="h-full rounded-full"
+                            style={{ backgroundColor: timerColor }}
+                            initial={{ width: "100%" }}
+                            animate={{ width: `${timerPercentage}%` }}
+                            transition={{ duration: 0.3 }}
+                          />
+                        </div>
+                      </motion.div>
+                    )}
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -685,13 +688,22 @@ export function GameSession({
                   roundIndex + 1
                 }`}</div>
                 <div className="text-6xl">{rounds[roundIndex].title}</div>
-                <Button
-                  onClick={onStartRound}
-                  className="bg-white hover:bg-neutral-100 text-neutral-950 mt-8 group"
-                >
-                  {"Start round"}
-                  <Play className="size-4 group-hover:translate-x-1 transition-transform duration-200" />
-                </Button>
+                <div className="w-full mt-8 flex justify-between gap-2">
+                  <Button
+                    onClick={onStartRound}
+                    className="bg-white hover:bg-neutral-100 text-neutral-950 group w-1/2"
+                  >
+                    {"Start round"}
+                    <Play className="size-4 group-hover:translate-x-1 transition-transform duration-200" />
+                  </Button>
+                  <Button
+                    onClick={() => setRoundIndex(roundIndex + 1)}
+                    className="bg-white hover:bg-neutral-100 text-neutral-950 group w-1/2"
+                  >
+                    {"Skip round"}
+                    <ChevronRight className="size-4 group-hover:translate-x-1 transition-transform duration-200" />
+                  </Button>
+                </div>
               </div>
             </motion.div>
           ) : (

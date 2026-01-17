@@ -324,7 +324,7 @@ export function SessionPage() {
               </motion.div>
             )}
           </div>
-        ) : question ? (
+        ) : question || questionImage ? (
           <div className="flex flex-col">
             {/* Category Badge */}
             <motion.div
