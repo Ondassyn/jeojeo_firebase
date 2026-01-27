@@ -144,7 +144,7 @@ export function SessionPage() {
 
     const playerRef = ref(
       realtimeDB,
-      `sessions/${sessionId}/players/${username}`
+      `sessions/${sessionId}/players/${username}`,
     );
 
     const unsubscribe = onValue(playerRef, (snapshot) => {
@@ -172,7 +172,7 @@ export function SessionPage() {
     if (answer.trim()) {
       set(
         ref(realtimeDB, `sessions/${sessionId}/players/${username}/answer`),
-        answer
+        answer,
       );
     }
   };
@@ -227,7 +227,7 @@ export function SessionPage() {
       {/* Main Content */}
       <div className="relative z-10 flex-1 flex flex-col p-4 pb-6 max-w-2xl mx-auto w-full">
         {/* Header with Timer */}
-        <div className="mb-6">
+        <div className="mb-4">
           <motion.div
             className="flex items-center justify-between mb-3"
             initial={{ opacity: 0, y: -20 }}
@@ -246,12 +246,26 @@ export function SessionPage() {
               </span>
               <span className=" text-neutral-400 ml-4 text-lg">{`${score} points`}</span>
             </div>
-
-            <div
-              className={`flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r ${getTimerColor()}`}
-            >
-              <Clock className="size-4" />
-              <span className="font-mono text-lg">{formatTime(timeLeft)}</span>
+            <div className="flex flex-row justify-center gap-4 items-center">
+              {/* Category Badge */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className=""
+              >
+                <span className="inline-block px-3 py-2 bg-blue-500/20 border border-blue-500/30 rounded-full text-sm text-blue-300">
+                  {roundTitle}
+                </span>
+              </motion.div>
+              <div
+                className={`flex items-center gap-2 px-4 py-1 rounded-full bg-linear-to-r ${getTimerColor()}`}
+              >
+                <Clock className="size-4" />
+                <span className="font-mono text-lg">
+                  {formatTime(timeLeft)}
+                </span>
+              </div>
             </div>
           </motion.div>
 
@@ -268,24 +282,12 @@ export function SessionPage() {
 
         {correctAnswer ? (
           <div className="flex flex-col">
-            {/* Category Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="mb-4"
-            >
-              <span className="inline-block px-3 py-1 bg-blue-500/20 border border-blue-500/30 rounded-full text-sm text-blue-300">
-                {roundTitle}
-              </span>
-            </motion.div>
-
             {/* Question */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="mb-6"
+              className="mb-4"
             >
               <h2 className="text-2xl leading-tight">
                 <span className="font-semibold text-green-500">
@@ -309,6 +311,7 @@ export function SessionPage() {
                 >
                   {answerImage.includes("output-format=mp4") ? (
                     <video
+                      key={answerImage}
                       aria-label="GIF: "
                       autoPlay={true}
                       // height="321"
@@ -341,24 +344,12 @@ export function SessionPage() {
           </div>
         ) : question || questionImage ? (
           <div className="flex flex-col">
-            {/* Category Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="mb-4"
-            >
-              <span className="inline-block px-3 py-1 bg-blue-500/20 border border-blue-500/30 rounded-full text-sm text-blue-300">
-                {roundTitle}
-              </span>
-            </motion.div>
-
             {/* Question */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="mb-6"
+              className="mb-4"
             >
               <h2 className="text-2xl leading-tight">{question}</h2>
             </motion.div>
@@ -380,6 +371,7 @@ export function SessionPage() {
                 >
                   {questionImage.includes("output-format=mp4") ? (
                     <video
+                      key={questionImage}
                       aria-label="GIF: "
                       autoPlay={true}
                       // height="321"
@@ -398,7 +390,7 @@ export function SessionPage() {
                       className="w-full h-auto object-cover"
                     />
                   )}
-                  {questionImage.includes("output-format=mp4") && (
+                  {!questionImage.includes("output-format=mp4") && (
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                       <div className="bg-black/60 p-3 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
                         <ZoomIn className="size-6 text-white" />
@@ -406,7 +398,7 @@ export function SessionPage() {
                     </div>
                   )}
                 </div>
-                {questionImage.includes("output-format=mp4") && (
+                {!questionImage.includes("output-format=mp4") && (
                   <p className="text-xs text-neutral-500 mt-2 text-center">
                     Tap to zoom
                   </p>
@@ -477,7 +469,7 @@ export function SessionPage() {
               <Loader />
             </div>
             <div className="mt-12 text-neutral-500 text-xl">
-              Waiting for the question...
+              Waiting for a question...
             </div>
           </div>
         )}
