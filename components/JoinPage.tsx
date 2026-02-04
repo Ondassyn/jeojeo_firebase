@@ -27,6 +27,7 @@ const JoinPage = () => {
   const [loadingGames, setLoadingGames] = useState(false);
   const [showGames, setShowGames] = useState(false);
   const [toEdit, setToEdit] = useState(false);
+  const [loadingJoin, setLoadingJoin] = useState(false);
 
   const onJoin = () => {
     if (!name) {
@@ -47,9 +48,11 @@ const JoinPage = () => {
       color: getRandomColor(),
     };
 
+    setLoadingJoin(true);
+
     set(
       ref(realtimeDB, `sessions/${gameId.toUpperCase()}/players/${name}`),
-      playerData
+      playerData,
     )
       .then(() => {
         router.push(`/session/${gameId.toUpperCase()}?username=${name}`);
@@ -76,7 +79,7 @@ const JoinPage = () => {
     try {
       const q = query(
         collection(firestoreDB, "games"),
-        orderBy("createdAt", "desc")
+        orderBy("createdAt", "desc"),
       );
       const querySnapshot = await getDocs(q);
 
@@ -86,7 +89,7 @@ const JoinPage = () => {
           ({
             uid: doc.id,
             ...doc.data(),
-          } as Game)
+          }) as Game,
       );
 
       setGames(items);
@@ -111,7 +114,11 @@ const JoinPage = () => {
       <div className="absolute inset-0 opacity-[0.015] mix-blend-overlay bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxwYXRoIGQ9Ik0wIDBoMzAwdjMwMEgweiIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIuMDUiLz48L3N2Zz4=')]" />
 
       <div className="relative w-16 h-16 mb-1">
-        <img src="/JJ.png" alt="Logo" className="w-full h-auto object-cover" />
+        <img
+          src="/JJ.png"
+          alt="Logo"
+          className="w-full h-auto object-cover rounded-sm"
+        />
       </div>
       <div className="text-3xl font-bold mb-6">JeoJeo</div>
       <div className="relative flex flex-col lg:flex-row items-center gap-4 w-full justify-center">
@@ -177,10 +184,18 @@ const JoinPage = () => {
             onClick={onJoin}
             className="w-full h-12 bg-white hover:bg-neutral-100 text-neutral-950 group relative overflow-hidden transition-colors duration-200"
           >
-            <span className="relative z-10 flex items-center justify-center gap-2">
-              Join
-              <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform duration-200" />
-            </span>
+            {loadingJoin ? (
+              <div className="">
+                <div className="w-4 h-4">
+                  <Loader />
+                </div>
+              </div>
+            ) : (
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                Join
+                <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform duration-200" />
+              </span>
+            )}
           </Button>
         </motion.div>
 

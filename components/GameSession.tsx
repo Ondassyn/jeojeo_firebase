@@ -7,9 +7,6 @@ import {
   Clock,
   Trophy,
   CheckCircle2,
-  XCircle,
-  Circle,
-  KeyRound,
   Copy,
   Play,
   HeartCrack,
@@ -25,7 +22,6 @@ import { onChildAdded, onValue, ref, set } from "firebase/database";
 import { realtimeDB } from "@/lib/firebase";
 import { toast } from "react-toastify";
 import { Player } from "@/lib/types/player";
-import { Question } from "@/lib/types/question";
 
 interface PlayersState {
   [key: string]: Player;
@@ -175,7 +171,7 @@ export function GameSession({
   const sendTimeForQuestion = () => {
     set(
       ref(realtimeDB, `sessions/${sessionId}/timeForQuestion`),
-      timeForQuestion
+      timeForQuestion,
     );
   };
 
@@ -186,14 +182,14 @@ export function GameSession({
   const sendRoundTitle = () => {
     set(
       ref(realtimeDB, `sessions/${sessionId}/roundTitle`),
-      rounds?.[roundIndex]?.title
+      rounds?.[roundIndex]?.title,
     );
   };
 
   const sendQuestion = (qIndex: number) => {
     set(
       ref(realtimeDB, `sessions/${sessionId}/question`),
-      rounds?.[roundIndex]?.questions?.[qIndex]?.question
+      rounds?.[roundIndex]?.questions?.[qIndex]?.question,
     );
 
     set(ref(realtimeDB, `sessions/${sessionId}/answer`), "");
@@ -204,7 +200,7 @@ export function GameSession({
   const sendQuestionImage = (qIndex: number) => {
     set(
       ref(realtimeDB, `sessions/${sessionId}/questionImage`),
-      rounds?.[roundIndex]?.questions?.[qIndex]?.questionImage || ""
+      rounds?.[roundIndex]?.questions?.[qIndex]?.questionImage || "",
     );
   };
 
@@ -217,7 +213,7 @@ export function GameSession({
       Object.entries(players ?? {}).map(([key, player]) => [
         key,
         { ...player, answer: "", isCorrect: null },
-      ])
+      ]),
     );
 
     // 2. Update the React state for the UI
@@ -237,12 +233,12 @@ export function GameSession({
 
     set(
       ref(realtimeDB, `sessions/${sessionId}/answer`),
-      rounds?.[roundIndex]?.questions?.[questionIndex]?.answer || ""
+      rounds?.[roundIndex]?.questions?.[questionIndex]?.answer || "",
     );
 
     set(
       ref(realtimeDB, `sessions/${sessionId}/answerImage`),
-      rounds?.[roundIndex]?.questions?.[questionIndex]?.answerImage || ""
+      rounds?.[roundIndex]?.questions?.[questionIndex]?.answerImage || "",
     );
   };
 
@@ -412,11 +408,14 @@ export function GameSession({
           <div className="flex items-center justify-between mb-8 relative z-10">
             <div className="flex items-center gap-3">
               {/* <div className="w-10 h-10 bg-linear-to-br from-blue-500 to-violet-600 rounded-xl" /> */}
-              <div className="relative w-10 h-10">
+              <div
+                className="relative w-10 h-10 cursor-pointer"
+                onClick={() => router.push("/")}
+              >
                 <img
                   src="/JJ.png"
                   alt="Logo"
-                  className="w-full h-auto object-cover"
+                  className="w-full h-auto object-cover rounded-sm"
                 />
               </div>
               <div>
@@ -475,7 +474,7 @@ export function GameSession({
                     <motion.h2
                       className={`${getFontSize(
                         rounds?.[roundIndex]?.questions?.[questionIndex]
-                          ?.question
+                          ?.question,
                       )} tracking-tight mb-12 leading-tight`}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -584,7 +583,7 @@ export function GameSession({
                           <p
                             className={`${getFontSize(
                               rounds?.[roundIndex]?.questions?.[questionIndex]
-                                ?.answer
+                                ?.answer,
                             )} tracking-tight leading-tight`}
                             key={roundIndex + "~" + questionIndex}
                           >

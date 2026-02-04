@@ -43,7 +43,7 @@ export function GameManager({
             isExpanded: true,
           },
         ]
-      : gameRounds
+      : gameRounds,
   );
   const [loadingSave, setLoadingSave] = useState(false);
 
@@ -211,7 +211,16 @@ export function GameManager({
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-linear-to-br from-blue-500 to-violet-600 rounded-xl" />
+            <div
+              className="relative w-10 h-10 cursor-pointer"
+              onClick={() => router.push("/")}
+            >
+              <img
+                src="/JJ.png"
+                alt="Logo"
+                className="w-full h-auto object-cover rounded-sm"
+              />
+            </div>
             <div>
               <h1 className="text-2xl tracking-tight">
                 {`${gameTitle} - Editing mode` || "Something went wrong"}
@@ -259,8 +268,8 @@ export function GameManager({
                           rounds.map((r) =>
                             r.uid === round.uid
                               ? { ...r, order: e.target.valueAsNumber }
-                              : r
-                          )
+                              : r,
+                          ),
                         )
                       }
                       className="flex-1 text-lg bg-transparent border-0 focus:bg-neutral-900 px-3 h-10"
@@ -275,8 +284,8 @@ export function GameManager({
                         rounds.map((r) =>
                           r.uid === round.uid
                             ? { ...r, title: e.target.value }
-                            : r
-                        )
+                            : r,
+                        ),
                       )
                     }
                     className="flex-1 text-lg bg-transparent border-0 focus:bg-neutral-900 px-3 h-10"
@@ -293,8 +302,8 @@ export function GameManager({
                         rounds.map((r) =>
                           r.uid === round.uid
                             ? { ...r, isExpanded: !r.isExpanded }
-                            : r
-                        )
+                            : r,
+                        ),
                       )
                     }
                     variant="outline"
@@ -357,12 +366,12 @@ export function GameManager({
                                         questions: r.questions.map((q) =>
                                           q.uid === question.uid
                                             ? { ...q, question: e.target.value }
-                                            : q
+                                            : q,
                                         ),
                                       };
                                     }
                                     return r;
-                                  })
+                                  }),
                                 )
                               }
                               className="bg-neutral-800 border-neutral-700 text-white min-h-[80]"
@@ -390,12 +399,12 @@ export function GameManager({
                                         questions: r.questions.map((q) =>
                                           q.uid === question.uid
                                             ? { ...q, answer: e.target.value }
-                                            : q
+                                            : q,
                                         ),
                                       };
                                     }
                                     return r;
-                                  })
+                                  }),
                                 )
                               }
                               className="bg-neutral-800 border-neutral-700 text-white"
@@ -427,12 +436,12 @@ export function GameManager({
                                                   ...q,
                                                   questionImage: e.target.value,
                                                 }
-                                              : q
+                                              : q,
                                           ),
                                         };
                                       }
                                       return r;
-                                    })
+                                    }),
                                   )
                                 }
                                 className="bg-neutral-800 border-neutral-700 text-white"
@@ -461,12 +470,12 @@ export function GameManager({
                                                   ...q,
                                                   answerImage: e.target.value,
                                                 }
-                                              : q
+                                              : q,
                                           ),
                                         };
                                       }
                                       return r;
-                                    })
+                                    }),
                                   )
                                 }
                                 className="bg-neutral-800 border-neutral-700 text-white"
@@ -484,12 +493,12 @@ export function GameManager({
                                   return {
                                     ...r,
                                     questions: r.questions.filter(
-                                      (q) => q.uid !== question.uid
+                                      (q) => q.uid !== question.uid,
                                     ),
                                   };
                                 }
                                 return r;
-                              })
+                              }),
                             )
                           }
                           variant="outline"
@@ -518,7 +527,7 @@ export function GameManager({
                             };
                           }
                           return r;
-                        })
+                        }),
                       )
                     }
                     variant="outline"

@@ -42,6 +42,7 @@ export function GamesModal({
   const [gameTitle, setGameTitle] = useState("");
   const [showAlertDialog, setShowAlertDialog] = useState(false);
   const [deleteUid, setDeleteUid] = useState("");
+  const [gameLoadingId, setGameLoadingId] = useState("");
 
   const onAdd = async () => {
     if (!gameTitle) {
@@ -75,6 +76,7 @@ export function GamesModal({
   };
 
   const onSelect = (gameUid: string) => {
+    setGameLoadingId(gameUid);
     if (toEdit) {
       router.push(`/game/edit/${gameUid}`);
     } else {
@@ -171,6 +173,17 @@ export function GamesModal({
                           className="flex items-center gap-4"
                           onClick={() => onSelect(game.uid)}
                         >
+                          {gameLoadingId === game.uid && (
+                            <motion.div
+                              initial={{ opacity: 0, x: -20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              className="px-2"
+                            >
+                              <div className="w-4 h-4">
+                                <Loader />
+                              </div>
+                            </motion.div>
+                          )}
                           {/* Team Info */}
                           <div className="flex-1 min-w-0">
                             <h3 className="text-lg text-white truncate mb-1">

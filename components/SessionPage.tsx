@@ -9,15 +9,6 @@ import { useParams, useSearchParams } from "next/navigation";
 import { onValue, ref, set } from "firebase/database";
 import { realtimeDB } from "@/lib/firebase";
 import Loader from "./ui/loader";
-import { Player } from "@/lib/types/player";
-
-interface Question {
-  id: number;
-  question: string;
-  category: string;
-  questionImage?: string;
-  timeLimit: number; // in seconds
-}
 
 export function SessionPage() {
   const params = useParams();
@@ -387,7 +378,7 @@ export function SessionPage() {
                     <img
                       src={questionImage}
                       alt="Question visual"
-                      className="w-full h-auto object-cover"
+                      className="w-full h-auto object-cover object-top"
                     />
                   )}
                   {!questionImage.includes("output-format=mp4") && (

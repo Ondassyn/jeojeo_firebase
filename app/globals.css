@@ -1,5 +1,42 @@
 @import "tailwindcss";
 
+* {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+*:hover {
+  scrollbar-color: rgba(155, 155, 155, 0.7) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+*:hover::-webkit-scrollbar-thumb {
+  background: rgba(155, 155, 155, 0.7);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(155, 155, 155, 0.9);
+}
+
+/* Show scrollbar when actively scrolling */
+*:active::-webkit-scrollbar-thumb {
+  background: rgba(155, 155, 155, 0.7);
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
