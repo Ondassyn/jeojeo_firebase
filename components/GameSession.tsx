@@ -22,6 +22,7 @@ import { onChildAdded, onValue, ref, set } from "firebase/database";
 import { realtimeDB } from "@/lib/firebase";
 import { toast } from "react-toastify";
 import { Player } from "@/lib/types/player";
+import AdaptiveContainer from "./AdaptiveContainer";
 
 interface PlayersState {
   [key: string]: Player;
@@ -500,6 +501,10 @@ export function GameSession({
                           questionIndex
                         ]?.questionImage.includes("output-format=mp4") ? (
                           <video
+                            key={
+                              rounds?.[roundIndex]?.questions?.[questionIndex]
+                                ?.questionImage
+                            }
                             aria-label="GIF: "
                             autoPlay={true}
                             // height="321"
@@ -518,13 +523,12 @@ export function GameSession({
                             />
                           </video>
                         ) : (
-                          <img
+                          <AdaptiveContainer
                             src={
                               rounds?.[roundIndex]?.questions?.[questionIndex]
                                 ?.questionImage
                             }
                             alt="Question"
-                            className="w-full max-h-[600] object-cover"
                           />
                         )}
                       </motion.div>
