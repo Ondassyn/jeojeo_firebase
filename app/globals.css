@@ -38,6 +38,7 @@
 }
 
 :root {
+  color-scheme: dark;
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -49,15 +50,18 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  /* Use !important if other scripts try to inject light-mode styles */
+  background-color: #0a0a0a !important; 
+  color: #ededed !important;
 }

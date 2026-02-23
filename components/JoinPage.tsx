@@ -120,7 +120,7 @@ const JoinPage = () => {
           className="w-full h-auto object-cover rounded-sm"
         />
       </div>
-      <div className="text-3xl font-bold mb-6">JeoJeo</div>
+      <div className="text-3xl font-bold mb-6 text-white">JeoJeo</div>
       <div className="relative flex flex-col lg:flex-row items-center gap-4 w-full justify-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
