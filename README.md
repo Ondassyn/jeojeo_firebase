@@ -1,4 +1,4 @@
-# 🎙️ LiveQuiz: Player Session Interface
+# 🎙️ LiveQuiz: Real-Time Interactive Player Engine
 
 A high-performance, mobile-responsive real-time quiz interface built with **Next.js 15** and **Firebase Realtime Database**. This project allows players to join live sessions, answer questions under a synchronized countdown, and view results pushed instantly from a host dashboard.
 
