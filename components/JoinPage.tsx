@@ -6,7 +6,7 @@ import { Button } from "./ui/button";
 import { ArrowRight, Spade } from "lucide-react";
 import { Input } from "./ui/input";
 import { useAuth } from "@/lib/providers/AuthContext";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { Game } from "@/lib/types/game";
 import { firestoreDB, realtimeDB } from "@/lib/firebase";
 import { GamesModal } from "./GamesModal";
@@ -75,10 +75,12 @@ const JoinPage = () => {
   };
 
   const handleFetch = async () => {
+    if (!user?.uid) return; // Guard clause to ensure user is logged in
     setLoadingGames(true);
     try {
       const q = query(
         collection(firestoreDB, "games"),
+        where("author", "==", user.uid),
         orderBy("createdAt", "desc"),
       );
       const querySnapshot = await getDocs(q);
